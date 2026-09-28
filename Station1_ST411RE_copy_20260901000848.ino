@@ -17,6 +17,7 @@ String currentTx;
 String nameTx = "Station1";     // nome della stazione remota
 unsigned long packetNumber = 0;
 unsigned long ACKNumber = 0;
+String action;
 int caricoH2O = 0; // 0 acqua chiusa  1 acqua aperta
 int scaricoH2O = 0; // 0 acqua chiusa  1 acqua aperta
 int livello = 0; // livello % dell'acqua nella vasca
@@ -87,10 +88,10 @@ void setup() {
   LoRa.setPins(LORA_SS, LORA_RST, LORA_DIO0);
 
   Serial.println("Pin LoRa impostati");
-
+/*
   LoRa.setTxPower(20);
   LoRa.setSpreadingFactor(12);
-
+*/
   Serial.println("Parametri LoRa impostati");
 
   if (!LoRa.begin(LORA_FREQ)) {
@@ -105,7 +106,8 @@ void setup() {
 
   Serial.println("LoRa OK");
   Serial.println("Programma avviato");
-
+  LoRa.setTxPower(20);
+  LoRa.setSpreadingFactor(12);
 }
 // =======================================================
 // LOOP
@@ -135,8 +137,8 @@ void loop() {
     currentTx = nameTx + "," +
                 String(packetNumber) + "," +
                 String(misuraLivello()) + "," +
-                String(caricoH2O)) + "," +;
-                String(scaricoH2O));
+                String(caricoH2O) + "," +
+                String(scaricoH2O);
 
     Serial.print("[TX] Invio: ");
     Serial.println(currentTx);
